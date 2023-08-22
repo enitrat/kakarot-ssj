@@ -10,6 +10,8 @@ and this project adheres to
 
 ### Added
 
+- tooling: CI now generates gas snapshots artifacts. pre-push hook to compare
+  gas snapshots changes
 - tooling: added scripts for gas snapshots generation/comparison. bumped scarb
   version to use nightlies.
 - refactor(21/08/2023): add result-based error management in stack methods and
