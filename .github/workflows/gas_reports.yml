@@ -28,11 +28,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
-          echo "$(python scripts/compare_snapshot.py)"
+          echo "result=$(python scripts/compare_snapshot.py)"
 
       - name: Comment on PR
         uses: thollander/actions-comment-pull-request@v2
         with:
           message:
-            "Snapshot Comparison Report:\n\n${{ steps.run-script.outputs.* }}"
+            "Snapshot Comparison Report:\n\n${{ join(steps.run-script.outputs.*)
+            }}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          comment_tag: gas-report
