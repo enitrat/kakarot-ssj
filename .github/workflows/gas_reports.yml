@@ -29,6 +29,9 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           result=$(python scripts/compare_snapshot.py)
+          result="${result//'%'/'%25'}"
+          result="${result//$'\n'/'%0A'}"
+          result="${result//$'\r'/'%0D'}"
           echo "::set-output name=result::${result}"
 
       - name: Comment on PR
