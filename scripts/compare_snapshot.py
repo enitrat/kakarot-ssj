@@ -19,7 +19,7 @@ def get_github_token_from_env(file_path=".env"):
                 if key == "GITHUB_TOKEN":
                     return value
     except FileNotFoundError:
-        print(f"Error: {file_path} file not found.")
+        return None
     except ValueError:
         print(f"Error: Invalid format in {file_path}. Expected 'KEY=VALUE' format.")
     return None
@@ -116,6 +116,8 @@ def print_colored_output(improvements, worsened, gas_changes):
         color = RED if gas_changes > 0 else GREEN
         gas_statement = "performance degradation, gas consumption +" if gas_changes > 0 else "performance improvement, gas consumption"
         print(color + f"Overall gas change: {gas_statement}{format(gas_changes, '.2f')} %" + ENDC)
+    else:
+        print("No changes in gas consumption.")
 
 def total_gas_used(current,previous):
     """Return the total gas used in the current and previous snapshot."""
