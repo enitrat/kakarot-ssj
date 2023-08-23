@@ -26,7 +26,7 @@ def get_github_token_from_env(file_path=".env"):
 
 def get_previous_snapshot():
     REPO = "enitrat/kakarot-ssj"  # Replace with your GitHub username and repo name
-    GITHUB_TOKEN = get_github_token_from_env()
+    GITHUB_TOKEN = get_github_token_from_env() or os.environ.get("GITHUB_TOKEN")
 
     try:
         REPO = "kkrt-labs/kakarot-ssj"
