@@ -1,0 +1,36 @@
+name: Compare Snapshot
+
+on:
+  pull_request:
+    paths:
+      - "scripts/compare_snapshot.py"
+
+jobs:
+  compare-snapshot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x" # Specify the Python version required
+
+      - name: Set up Scarb
+        uses: software-mansion/setup-scarb@v1
+        with:
+          scarb-version: "nightly-2023-08-12"
+
+      - name: Run compare_snapshot script
+        id: run-script
+        run: |
+          result=$(python scripts/compare_snapshot.py)
+          echo "RESULT=$result" >> $GITHUB_ENV
+
+      - name: Comment on PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: "Snapshot Comparison Report:\n\n${{ env.RESULT }}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
